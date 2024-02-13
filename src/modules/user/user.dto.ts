@@ -7,7 +7,7 @@ export class UserDto {
   @Exclude()
   password: string;
   name: string;
-  dob: string;
+  dob: Date;
   gender: string;
   address: string;
   isSubscribe: boolean;

@@ -1,22 +1,22 @@
 version: '3'
 services:
-  node:
-    build: .
-    container_name: nestjs-ecommerce
-    restart: always
-    volumes:
-      - ./src:/app/src
-    environment:
-      TZ: Asia/Bangkok
-      LOGGING: 'true'
-      LOGGING_DISPLAY_SQL: 'true'
-      DB_USERNAME: postgres
-      DB_PASSWORD: postgres
-      DB_DATABASE: nestjs-ecommerce
-      DB_HOST: postgres
-      DB_PORT: 5432
-    depends_on:
-      - 'postgres'
+  # node:
+  #   build: .
+  #   container_name: nestjs-ecommerce
+  #   restart: always
+  #   volumes:
+  #     - ./src:/app/src
+  #   environment:
+  #     TZ: Asia/Bangkok
+  #     LOGGING: 'true'
+  #     LOGGING_DISPLAY_SQL: 'true'
+  #     DB_USERNAME: postgres
+  #     DB_PASSWORD: postgres
+  #     DB_DATABASE: nestjs-ecommerce
+  #     DB_HOST: postgres
+  #     DB_PORT: 5432
+  #   depends_on:
+  #     - 'postgres'
   postgres:
     image: postgres:16-alpine
     container_name: nestjs-ecommerce-postgres

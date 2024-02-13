@@ -1,21 +1,22 @@
-import { Body, Controller, Get, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Put, Request, UseGuards } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
-import { AuthGuard } from '../auth/auth.guard';
-import { UserService } from './user.service';
 
-@UseGuards(AuthGuard)
+import { UserService } from './user.service';
+import { JwtAuthGuard } from '../auth/auth.guard';
+
+@UseGuards(JwtAuthGuard)
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
 
   @Get('/profile')
   getUserId(@Request() req: any) {
-    console.log(req.user.id);
     return this.userService.findById(req.user.id);
   }
 
-  @Get('/update-profile')
+  @Put('/update-profile')
   uodateProfile(@Body() body: any, @Request() req: any) {
-    return this.userService.create({ ...body });
+    const userId = req.user.id;
+    return this.userService.update(userId, body);
   }
 }

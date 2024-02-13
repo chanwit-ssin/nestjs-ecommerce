@@ -1,19 +1,27 @@
-import { Controller } from "@nestjs/common";
+import {
+  Body,
+  ClassSerializerInterceptor,
+  Controller,
+  Post,
+  UseInterceptors,
+  UsePipes,
+} from '@nestjs/common';
+import { LoginDto, RegisterDto } from './auth.dto';
+import { AuthService } from './auth.service';
 
-// @ApiTags('auth')
 @Controller('auth')
 // @UsePipes(SanitizePipe)
-// @UseInterceptors(ClassSerializerInterceptor)
+@UseInterceptors(ClassSerializerInterceptor)
 export class AuthController {
-//   constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
-//   @Post('register')
-//   async register(@Body() body: RegisterRequest) {
-//     return this.authService.register(body);
-//   }
+  @Post('login')
+  login(@Body() dto: LoginDto) {
+    return this.authService.login(dto);
+  }
 
-//   @Post('login')
-//   async login(@Body() body: LoginDto) {
-//     return this.authService.login(body);
-//   }
+  @Post('register')
+  register(@Body() dto: RegisterDto) {
+    return this.authService.register(dto);
+  }
 }

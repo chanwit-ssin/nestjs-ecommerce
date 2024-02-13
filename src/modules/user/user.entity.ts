@@ -1,9 +1,9 @@
 import { Exclude } from 'class-transformer';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity('user')
 export class User {
-  @Column({ name: 'id', type: 'uuid' })
+  @PrimaryColumn({ name: 'id', type: 'uuid' })
   id: string;
 
   @Column()
@@ -13,9 +13,9 @@ export class User {
   password: string;
   @Column()
   name: string;
-  @Column()
-  dob: string;
-  @Column()
+  @Column({ nullable: true })
+  dob: Date;
+  @Column({ nullable: true })
   gender: string;
   @Column({ nullable: true })
   address: string;

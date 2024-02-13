@@ -1,9 +1,14 @@
-export const jwtConstants = {
-  secret: 'secret',
-};
+import { registerAs } from '@nestjs/config';
 
-export const jwtConfig = {
-  global: true,
-  secret: jwtConstants.secret,
-  signOptions: { expiresIn: '30d' },
+export type AuthConfig = {
+  jwtSecret: string;
+  jwtExpiresIn: string;
 };
+export default registerAs(
+  'auth',
+  () =>
+    ({
+      jwtSecret: process.env.JWT_SECRET,
+      jwtExpiresIn: process.env.JWT_EXPIRES_IN || '1d',
+    }) as AuthConfig,
+);

@@ -1,8 +1,8 @@
 import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
-import { Product } from '../product/product.entity';
+import { ProductCategory } from '../product-category/product-category.entity';
 
-@Entity('store')
-export class Store {
+@Entity('category')
+export class Category {
   @PrimaryColumn({ name: 'id', type: 'uuid' })
   id: string;
 
@@ -12,9 +12,9 @@ export class Store {
   description: string;
 
   @OneToMany(
-    () => Product,
-    (product: Product) => product.store,
+    () => ProductCategory,
+    (productCategory: ProductCategory) => productCategory.product,
     { eager: true },
   )
-  products: Product[];
+  productCategories: ProductCategory[];
 }
