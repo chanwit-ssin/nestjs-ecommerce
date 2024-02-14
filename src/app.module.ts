@@ -4,6 +4,9 @@ import authConfig from './config/auth.config';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ProductModule } from './modules/product/product.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { CartModule } from './modules/cart/cart.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
@@ -18,7 +21,10 @@ import { ProductModule } from './modules/product/product.module';
         configService.get<TypeOrmModuleOptions>('db'),
       inject: [ConfigService],
     }),
-    ProductModule,
+    AuthModule,
+    // ProductModule,
+    // CartModule,
+    UserModule,
   ],
   controllers: [],
   providers: [],

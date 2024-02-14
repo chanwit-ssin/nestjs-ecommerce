@@ -8,7 +8,9 @@ import {
 } from '@nestjs/common';
 import { LoginDto, RegisterDto } from './auth.dto';
 import { AuthService } from './auth.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('auth')
 @Controller('auth')
 // @UsePipes(SanitizePipe)
 @UseInterceptors(ClassSerializerInterceptor)

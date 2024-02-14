@@ -1,9 +1,12 @@
 import { Exclude } from 'class-transformer';
-import { OmitType, PartialType } from '@nestjs/swagger';
+import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
 
 export class ProductDto {
+  @ApiProperty()
   id: string;
+  @ApiProperty()
   name: string;
+  @ApiProperty()
   storeId: boolean;
 }
 

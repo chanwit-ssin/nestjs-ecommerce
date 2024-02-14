@@ -1,9 +1,15 @@
-import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryColumn,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { ProductCategory } from '../product-category/product-category.entity';
 
 @Entity('category')
 export class Category {
-  @PrimaryColumn({ name: 'id', type: 'uuid' })
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column({ name: 'name' })

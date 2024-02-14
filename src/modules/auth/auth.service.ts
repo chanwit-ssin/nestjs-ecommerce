@@ -34,7 +34,7 @@ export class AuthService {
     let user: any;
     user = await this.userRepository.findOne({ where: { email: dto.email } });
     if (!user) {
-      user = this.userRepository.save({
+      user = await this.userRepository.save({
         ...dto,
         password: await hashPassword(dto.password),
       });
@@ -45,9 +45,15 @@ export class AuthService {
       };
       return {
         accessToken: this.jwtService.sign(payload),
+        id: user.id,
+        email: user.email,
       };
     }
 
     throw new UnauthorizedException('Email Exist.');
+  }
+
+  async validate(id: string, email: string) {
+    return await this.userRepository.findOne({ where: { id, email } });
   }
 }

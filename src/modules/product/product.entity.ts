@@ -1,18 +1,25 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryColumn,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { ProductCategory } from '../product-category/product-category.entity';
 import { Store } from '../store/store.entity';
 
 @Entity('product')
 export class Product {
-  @PrimaryColumn({ name: 'id', type: 'uuid' })
+  @PrimaryGeneratedColumn('uuid')
   id: string;
-  @Column({ name: 'shop_id', type: 'uuid' })
+  @Column({ name: 'store_id', type: 'uuid' })
   storeId: string;
 
   @Column({ name: 'name' })
   name: string;
   @Column({ name: 'price', default: '0', type: 'decimal' })
-  price: bigint;
+  price: number;
   @Column({ name: 'description', type: 'text', nullable: true })
   description: string;
 
@@ -22,9 +29,6 @@ export class Product {
     { eager: true },
   )
   productCategories: ProductCategory[];
-  @ManyToOne(
-    () => Store,
-    (store: Store) => store.products,
-  )
+  @ManyToOne(() => Store, (store: Store) => store.products)
   store: Store;
 }
