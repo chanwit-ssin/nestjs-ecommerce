@@ -1,6 +1,7 @@
 interface Product {
   productId: number;
   quantity: number;
+  isFreebie?: boolean;
 }
 
 interface Discount {
@@ -42,20 +43,21 @@ export class Cart {
   products: Product[];
   discounts: Discount[];
   freebies: Freebie[];
-//   totalDiscount: number;
-//   totalPrice: number;
+  //   totalDiscount: number;
+  //   totalPrice: number;
 
   constructor(customerId: number) {
     this.customerId = customerId;
     this.products = [];
-    this. discounts = [];
+    this.discounts = [];
     this.freebies = [];
   }
 
-  add(productId: number, quantity: number) {
+  add(productId: number, quantity: number, isFreebie: boolean = false) {
     this.products.push({
       productId: productId,
       quantity: quantity,
+      isFreebie,
     });
   }
 
@@ -85,10 +87,9 @@ export class Cart {
   }
 
   getTotal() {
-    let totalPrice = this.products.reduce(
-      (total, p) => total + p.quantity * PRODUCT[p.productId],
-      0,
-    );
+    let totalPrice = this.products
+      .filter((p) => !p.isFreebie)
+      .reduce((total, p) => total + p.quantity * PRODUCT[p.productId], 0);
 
     for (let discount of this.discounts) {
       const { condition } = discount;
@@ -102,6 +103,12 @@ export class Cart {
             max && (totalPrice * amount) / 100 > max
               ? max
               : (totalPrice * amount) / 100;
+          console.log(
+            'ceo: ',
+            max && (totalPrice * amount) / 100 > max
+              ? max
+              : (totalPrice * amount) / 100,
+          );
           break;
       }
     }
@@ -123,7 +130,7 @@ export class Cart {
   addFreebie(name: string, condition: FreebieCondition, reward: Product) {
     const { type } = condition;
     if (type === 'contains' && this.hasProducts(condition?.productId || null)) {
-      this.add(reward?.productId, reward?.quantity);
+      this.add(reward?.productId, reward?.quantity, true);
       this.freebies.push({ name, condition, reward });
     }
   }
